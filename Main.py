@@ -8,7 +8,7 @@ from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from kaggle.api.kaggle_api_extended import KaggleApi
 
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='[%(asctime)s] %(levelname)s %(message)s', level=logging.DEBUG)
 
 def download_dataset():
     api = KaggleApi()
@@ -43,4 +43,4 @@ resize_video_frame()
 
 vgg = VGG16(input_shape=(224, 224, 3), weights='imagenet', include_top=False)
 vgg.summary()
-vgg.save_weights("vgg16.h5")
+vgg.save_weights("vgg16.weights.h5")
