@@ -6,17 +6,20 @@ import numpy as np
 import pandas as pd
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
+from kaggle.api.kaggle_api_extended import KaggleApi
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
 
-
 def download_dataset():
+    api = KaggleApi()
+    api.authenticate()
+
     logging.info("Start downloading dataset")
     target_directory = "dataset"
     zip_file = "anomaly.zip"
 
-    os.system("kaggle datasets download -d tadatho/anomaly")
     os.makedirs(target_directory, exist_ok=True)
+    api.dataset_download_files('tadatho/anomaly')
 
     logging.info(f'Extract into the directory: {target_directory}')
     with ZipFile(zip_file, 'r') as zip:
@@ -38,6 +41,6 @@ def resize_video_frame():
 download_dataset()
 resize_video_frame()
 
-#vgg = VGG16(input_shape=(224, 224, 3), weights='imagenet', include_top=False)
-#gg.summary()
-#vgg.save_weights("vgg16.h5")
+vgg = VGG16(input_shape=(224, 224, 3), weights='imagenet', include_top=False)
+vgg.summary()
+vgg.save_weights("vgg16.h5")
